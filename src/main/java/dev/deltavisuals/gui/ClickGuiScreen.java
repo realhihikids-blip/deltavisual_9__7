@@ -693,7 +693,7 @@ public final class ClickGuiScreen extends Screen {
 
     /** Characters allowed in a friend code or a nick: letters (Shift = capital), digits, '-' and '_' (Shift + '-'). */
     private static char friendChar(int key) {
-        boolean shift = Screen.hasShiftDown();
+                boolean shift = isDown(GLFW.GLFW_KEY_LEFT_SHIFT) || isDown(GLFW.GLFW_KEY_RIGHT_SHIFT);
         if (key >= GLFW.GLFW_KEY_A && key <= GLFW.GLFW_KEY_Z) return (char) ((shift ? 'A' : 'a') + key - GLFW.GLFW_KEY_A);
         if (key >= GLFW.GLFW_KEY_0 && key <= GLFW.GLFW_KEY_9) return (char) ('0' + key - GLFW.GLFW_KEY_0);
         if (key == GLFW.GLFW_KEY_MINUS) return shift ? '_' : '-';
@@ -738,7 +738,7 @@ public final class ClickGuiScreen extends Screen {
             if (key == GLFW.GLFW_KEY_ESCAPE) { frFocus = false; return true; }
             if (key == GLFW.GLFW_KEY_ENTER || key == GLFW.GLFW_KEY_KP_ENTER) { submitFriend(); return true; }
             if (key == GLFW.GLFW_KEY_BACKSPACE) { if (!frText.isEmpty()) frText = frText.substring(0, frText.length() - 1); return true; }
-            if (key == GLFW.GLFW_KEY_V && Screen.hasControlDown()) {
+                        if (key == GLFW.GLFW_KEY_V && (isDown(GLFW.GLFW_KEY_LEFT_CONTROL) || isDown(GLFW.GLFW_KEY_RIGHT_CONTROL) || isDown(GLFW.GLFW_KEY_LEFT_SUPER) || isDown(GLFW.GLFW_KEY_RIGHT_SUPER))) {
                 String clip = MinecraftClient.getInstance().keyboard.getClipboard();
                 if (clip != null) {
                     String clean = clip.trim().replaceAll("[^A-Za-z0-9_-]", "");
